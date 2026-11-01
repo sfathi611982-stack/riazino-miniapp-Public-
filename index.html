@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#07110c">
+  <title>ریاضینو | دستیار هوشمند ریاضی</title>
+  <script src="https://tapi.bale.ai/miniapp.js"></script>
+  <style>
+    :root{--bg:#07110c;--panel:#0d1b13;--panel2:#10251a;--green:#39f58a;--green2:#12bd68;--text:#effff5;--muted:#9ab5a4;--line:#1d3b2a;--danger:#ff7373}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(ellipse at 50% -15%,#16452b 0%,var(--bg) 48%);color:var(--text);font-family:Tahoma,"Segoe UI",sans-serif;min-height:100vh}
+    .wrap{max-width:850px;margin:auto;padding:18px 14px 40px}
+    header{text-align:center;padding:22px 8px 18px}
+    .logo{width:68px;height:68px;margin:0 auto 10px;border:1px solid #36ef88;border-radius:22px;display:grid;place-items:center;color:var(--green);font-size:39px;font-weight:bold;box-shadow:0 0 28px #23e87830;background:#0b1d12}
+    h1{margin:0;font-size:29px;letter-spacing:1px;color:var(--green)}
+    .sub{color:var(--muted);font-size:13px;margin-top:8px}
+    .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:14px 0 16px}
+    .tab{border:1px solid var(--line);background:#0b1911;color:var(--muted);padding:12px 4px;border-radius:13px;font-size:13px;cursor:pointer}
+    .tab.active{background:#123522;color:var(--green);border-color:#2cbd70;box-shadow:inset 0 0 0 1px #2cbd7040}
+    .panel{display:none;background:linear-gradient(145deg,#102219,#0a1710);border:1px solid var(--line);border-radius:19px;padding:17px;box-shadow:0 12px 35px #0005}
+    .panel.active{display:block}
+    h2{font-size:18px;margin:0 0 14px;color:var(--green)}
+    h3{font-size:14px;color:#d8f8e4;margin:16px 0 8px}
+    label{display:block;color:var(--muted);font-size:12px;margin:10px 0 6px}
+    input,select,textarea{width:100%;padding:12px;border:1px solid #28533a;border-radius:11px;background:#07130c;color:var(--text);font:inherit;outline:none}
+    input:focus,select:focus,textarea:focus{border-color:var(--green)}
+    button{font:inherit;cursor:pointer}
+    .primary{border:0;border-radius:11px;padding:12px 16px;background:linear-gradient(100deg,var(--green2),var(--green));color:#03200f;font-weight:bold;width:100%;margin-top:12px}
+    .secondary{border:1px solid #28603e;border-radius:10px;padding:10px;background:#10281a;color:var(--green)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .result{margin-top:13px;padding:13px;border-radius:12px;background:#07140c;border:1px solid #235438;color:#dfffea;min-height:44px;line-height:1.9;overflow-wrap:anywhere}
+    .keypad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+    .key{padding:14px 5px;border:1px solid #244a33;border-radius:11px;background:#102319;color:var(--text);font-size:17px}
+    .key.op{color:var(--green);background:#143322}
+    .key.equal{background:var(--green);color:#052111;font-weight:bold}
+    .muted{color:var(--muted);font-size:12px;line-height:1.9}
+    .lesson{padding:12px;border:1px solid var(--line);border-radius:12px;margin:8px 0;background:#0a1910}
+    .lesson b{color:var(--green)}
+    footer{text-align:center;color:#668574;font-size:11px;margin-top:20px}
+    @media(max-width:430px){.tab{font-size:11px;padding:11px 2px}.wrap{padding:10px}.panel{padding:13px}.grid2{gap:8px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">π</div>
+    <h1>RIAZINO</h1>
+    <div class="sub">دستیار هوشمند ریاضی | یادگیری، محاسبه و کشف</div>
+  </header>
+
+  <nav class="tabs" aria-label="بخش‌های ریاضینو">
+    <button class="tab active" data-tab="calc">ماشین‌حساب</button>
+    <button class="tab" data-tab="geo">هندسه</button>
+    <button class="tab" data-tab="learn">آموزش</button>
+    <button class="tab" data-tab="solve">حل معادله</button>
+  </nav>
+
+  <section class="panel active" id="calc">
+    <h2>ماشین‌حساب ریاضی</h2>
+    <label for="display">عبارت ریاضی</label>
+    <input id="display" inputmode="decimal" placeholder="مثلاً: (12+8)×3" autocomplete="off">
+    <div class="keypad">
+      <button class="key" data-k="7">۷</button><button class="key" data-k="8">۸</button><button class="key" data-k="9">۹</button><button class="key op" data-k="/">÷</button>
+      <button class="key" data-k="4">۴</button><button class="key" data-k="5">۵</button><button class="key" data-k="6">۶</button><button class="key op" data-k="*">×</button>
+      <button class="key" data-k="1">۱</button><button class="key" data-k="2">۲</button><button class="key" data-k="3">۳</button><button class="key op" data-k="-">−</button>
+      <button class="key" data-k="0">۰</button><button class="key" data-k=".">.</button><button class="key op" data-k="(">(</button><button class="key op" data-k=")">)</button>
+      <button class="key op" data-k="**">توان</button><button class="key op" data-k="%">٪</button><button class="key op" data-action="clear">پاک</button><button class="key equal" data-action="eval">=</button>
+    </div>
+    <div class="grid2">
+      <button class="secondary" onclick="special('sqrt')">ریشهٔ دوم</button>
+      <button class="secondary" onclick="special('square')">توان دوم</button>
+    </div>
+    <div class="result" id="calcResult">نتیجه اینجا نمایش داده می‌شود.</div>
+    <p class="muted">برای ب.م.م و ک.م.م از بخش ابزارهای عددی در نسخه‌های بعدی استفاده خواهد شد.</p>
+  </section>
+
+  <section class="panel" id="geo">
+    <h2>محاسبات هندسه</h2>
+    <label for="shape">نوع شکل</label>
+    <select id="shape" onchange="drawGeo()">
+      <option value="square">مربع</option><option value="rect">مستطیل</option><option value="triangle">مثلث</option>
+      <option value="circle">دایره</option><option value="cube">مکعب</option><option value="box">مکعب‌مستطیل</option>
+      <option value="cylinder">استوانه</option>
+    </select>
+    <div id="geoInputs"></div>
+    <button class="primary" onclick="calculateGeo()">محاسبه</button>
+    <div class="result" id="geoResult">ابعاد را وارد کن تا محاسبه انجام شود.</div>
+  </section>
+
+  <section class="panel" id="learn">
+    <h2>آموزش مفاهیم ریاضی</h2>
+    <div class="lesson"><b>عدد اول</b><p>عدد طبیعی بزرگ‌تر از ۱ که دقیقاً دو مقسوم‌علیه مثبت دارد: ۱ و خودش. مانند ۲، ۳، ۵ و ۷.</p></div>
+    <div class="lesson"><b>توان</b><p>در \(a^n\)، عدد a پایه و n توان است. برای نمونه، \(2^3=2×2×2=8\).</p></div>
+    <div class="lesson"><b>ریشهٔ دوم</b><p>ریشهٔ دوم عدد a، عدد نامنفی‌ای است که اگر در خودش ضرب شود، a به دست می‌آید. مثلاً √49=7.</p></div>
+    <div class="lesson"><b>مساحت و محیط</b><p>مساحت اندازهٔ سطح داخل شکل است؛ محیط مجموع طول ضلع‌های مرز شکل است.</p></div>
+    <p class="muted">این بخش نمونهٔ اولیه است؛ درس‌های کامل‌تر، مثال‌های حل‌شده و اثبات‌ها در مرحله‌های بعد اضافه می‌شوند.</p>
+  </section>
+
+  <section class="panel" id="solve">
+    <h2>حل معادلهٔ درجهٔ اول</h2>
+    <p class="muted">معادله را به شکل ax + b = c وارد کن. مثلاً برای 3x + 5 = 20، مقادیر زیر را وارد کن.</p>
+    <div class="grid2">
+      <div><label for="a">ضریب x (a)</label><input id="a" type="number" value="3"></div>
+      <div><label for="b">عدد ثابت (b)</label><input id="b" type="number" value="5"></div>
+    </div>
+    <label for="c">طرف راست معادله (c)</label><input id="c" type="number" value="20">
+    <button class="primary" onclick="solveLinear()">حل مرحله‌به‌مرحله</button>
+    <div class="result" id="solveResult">پاسخ و مراحل حل اینجا نمایش داده می‌شود.</div>
+  </section>
+  <footer>RIAZINO • نسخهٔ آزمایشی ۱٫۰</footer>
+</div>
+<script>
+  const $ = id => document.getElementById(id);
+  document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===btn));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===btn.dataset.tab));
+  }));
+  document.querySelectorAll('[data-k]').forEach(btn=>btn.addEventListener('click',()=>{$('display').value+=btn.dataset.k;$('display').focus()}));
+  document.querySelector('[data-action="clear"]').onclick=()=>{$('display').value='';$('calcResult').textContent='پاک شد.'};
+  document.querySelector('[data-action="eval"]').onclick=calculateExpression;
+  function calculateExpression(){
+    const raw=$('display').value.replace(/[×]/g,'*').replace(/[÷]/g,'/');
+    if(!raw.trim()) return;
+    if(!/^[0-9+\-*/().%\s]+$/.test(raw)){ $('calcResult').textContent='عبارت نامعتبر است.'; return; }
+    try{
+      const value=Function('"use strict";return ('+raw+')')();
+      $('calcResult').textContent=Number.isFinite(value)?'نتیجه: '+value:'این عبارت نتیجهٔ قابل‌محاسبه ندارد.';
+    }catch(e){$('calcResult').textContent='لطفاً عبارت را بررسی کن.'}
+  }
+  function special(type){
+    const v=Number($('display').value);
+    if(!Number.isFinite(v)){$('calcResult').textContent='ابتدا یک عدد وارد کن.';return}
+    const r=type==='sqrt'?Math.sqrt(v):v*v;
+    $('calcResult').textContent=Number.isFinite(r)?'نتیجه: '+r:'برای این عدد در اعداد حقیقی ریشه تعریف نشده است.';
+  }
+  const fields={
+    square:[['a','طول ضلع']],
+    rect:[['a','طول'],['b','عرض']],
+    triangle:[['a','قاعده'],['b','ارتفاع'],['c','ضلع سوم (اختیاری)']],
+    circle:[['r','شعاع']],
+    cube:[['a','طول ضلع']],
+    box:[['a','طول'],['b','عرض'],['c','ارتفاع']],
+    cylinder:[['r','شعاع قاعده'],['h','ارتفاع']]
+  };
+  function drawGeo(){
+    $('geoInputs').innerHTML=fields[$('shape').value].map(([id,label])=>`<label for="g_${id}">${label}</label><input id="g_${id}" type="number" min="0" step="any" placeholder="مقدار ${label}">`).join('');
+    $('geoResult').textContent='ابعاد را وارد کن تا محاسبه انجام شود.';
+  }
+  function gv(id){return Number($('g_'+id).value)}
+  function calculateGeo(){
+    const s=$('shape').value, v={};
+    for(const [id] of fields[s]) v[id]=gv(id);
+    if(Object.values(v).some(x=>!Number.isFinite(x)||x<=0)){ $('geoResult').textContent='لطفاً همهٔ اندازه‌های لازم را با عدد مثبت وارد کن.';return; }
+    let out='';
+    if(s==='square')out=`محیط = 4×${v.a} = ${4*v.a}<br>مساحت = ${v.a}² = ${v.a*v.a}`;
+    if(s==='rect')out=`محیط = 2×(${v.a}+${v.b}) = ${2*(v.a+v.b)}<br>مساحت = ${v.a}×${v.b} = ${v.a*v.b}`;
+    if(s==='triangle'){
+      const area=v.a*v.b/2; out=`مساحت = (قاعده×ارتفاع)÷۲ = ${area}`;
+      if(v.c>0)out+=`<br>محیط = ${v.a+v.b+v.c} (با فرض اینکه سه مقدار، ضلع‌ها باشند؛ برای محیط دقیق، سه ضلع را وارد کن.)`;
+    }
+    if(s==='circle')out=`محیط ≈ 2πr = ${(2*Math.PI*v.r).toFixed(4)}<br>مساحت ≈ πr² = ${(Math.PI*v.r*v.r).toFixed(4)}`;
+    if(s==='cube')out=`حجم = a³ = ${v.a**3}<br>مساحت کل = 6a² = ${6*v.a*v.a}`;
+    if(s==='box')out=`حجم = طول×عرض×ارتفاع = ${v.a*v.b*v.c}<br>مساحت کل = 2×(طول×عرض + طول×ارتفاع + عرض×ارتفاع) = ${2*(v.a*v.b+v.a*v.c+v.b*v.c)}`;
+    if(s==='cylinder')out=`حجم = πr²h ≈ ${(Math.PI*v.r*v.r*v.h).toFixed(4)}<br>مساحت جانبی = 2πrh ≈ ${(2*Math.PI*v.r*v.h).toFixed(4)}<br>مساحت کل = 2πr(r+h) ≈ ${(2*Math.PI*v.r*(v.r+v.h)).toFixed(4)}`;
+    $('geoResult').innerHTML=out;
+  }
+  function solveLinear(){
+    const a=Number($('a').value),b=Number($('b').value),c=Number($('c').value);
+    if(![a,b,c].every(Number.isFinite)){$('solveResult').textContent='مقادیر واردشده معتبر نیستند.';return}
+    if(a===0){$('solveResult').textContent=b===c?'معادله بی‌نهایت جواب دارد.': 'معادله جواب ندارد، چون ضریب x صفر است.';return}
+    const x=(c-b)/a;
+    $('solveResult').innerHTML=`معادله: ${a}x + (${b}) = ${c}<br>۱) از دو طرف b را کم می‌کنیم: ${a}x = ${c-b}<br>۲) دو طرف را بر ${a} تقسیم می‌کنیم.<br><b>پاسخ: x = ${x}</b>`;
+  }
+  drawGeo();
+  try{if(window.Bale&&window.Bale.WebApp){window.Bale.WebApp.ready();window.Bale.WebApp.expand();}}catch(e){}
+</script>
+</body>
+</html>
